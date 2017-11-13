@@ -5,7 +5,7 @@
         <!-- Example row of columns -->
         <div class="row col-md-12 col-lg-12 col-sm-12" style="background: #182824;  margin: 10px; padding: 15px">
 
-            <form method="post" action="{{route('companies.update',[$comp->id])}}">
+            <form method="post" action="{{route('projects.update',[$project->id])}}">
                 {{csrf_field()}}
 
                 {{--<form method="POST" action="/register">  : this is to create--}}
@@ -19,12 +19,12 @@
                     </label>
                     <input type="text" class="form-control" id="company-name" name="name"
                            placeholder="Enter name"
-                    value="{{$comp->name}}" required>
+                    value="{{$project->name}}" required>
                 </div>
 
                 <div class="form-group">
                     <label for="company-content">
-                        Name
+                        Description
                         <span class="required">*</span>
                     </label>
                     <input type="text" class="form-control autosize-target text-left"
@@ -32,15 +32,27 @@
                            the "name" should be same as described in DB --}}
                            placeholder="Enter Description"
                            style="resize: vertical" rows="5"
-                           value="{{$comp->description}}" required >
+                           value="{{$project->description}}" required >
                 </div>
 
 
-                <div class="form-check">
-                    <label class="form-check-label">
-                        <input type="checkbox" class="form-check-input">
-                        I hereby declare...
-                    </label>
+
+                <div class="form-group" value="{{$comp->name}}"  required >
+                    <label for="company_id">Select Author Company</label>
+
+                    <input type="text" class="form-control" id="company-name" name="company_id"
+                           placeholder="Enter name"
+                           value="{{$comp->name}}" required>
+                </div>
+
+                {{--
+
+                --}}
+
+                <div class="form-group">
+                    <label for="days">Days</label>
+                    <input type="number" class="form-control" id="days" name="days"
+                           value="{{$project->days}}" required>
                 </div>
 
                 <button type="submit" class="btn btn-primary" value="Submit">Submit</button>

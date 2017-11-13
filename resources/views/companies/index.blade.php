@@ -3,7 +3,7 @@
     <div class="col-md-6 col-lg-6 col-md-offset-3 col-lg-offset-3">
         <div class="panel panel-primary">
             <div class="panel-heading">
-                Companies
+                Companies<a class="pull-right btn btn-primary btn-sm" href="/companies/create"> Create new Comp</a>
             </div>
             <div class="panel-body">
 

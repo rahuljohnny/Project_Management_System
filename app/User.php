@@ -22,7 +22,7 @@ class User extends Authenticatable
         'middle_name',
         'last_name',
         'city',
-        'roke_id'
+        'role_id'
 
     ];
 
