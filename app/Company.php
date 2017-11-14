@@ -21,6 +21,10 @@ class Company extends Model
         return $this->hasMany(Project::class);
     }
 
+    public function comments(){
+        return $this->morphMany(Comment::class,'commentable');
+    }
+
     /*
     public function createNew(Company $company) //TODO: A user can publish a post
     {

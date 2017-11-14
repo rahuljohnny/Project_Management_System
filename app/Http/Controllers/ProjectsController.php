@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Comment;
 use App\Company;
 use App\Project;
 use Illuminate\Http\Request;
@@ -9,16 +10,16 @@ use Illuminate\Support\Facades\Auth;
 
 class ProjectsController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
-        $companies = Company::all();
-        $projects = Project::all();
-        return view('projects.index',['companies'=>$companies, 'projects'=> $projects]);
+        if(Auth::check()){
+            //$companies = Company::all();
+            $companies = Company::all();
+            $projects = Project::where('user_id',Auth::user()->id)->get();
+            return view('projects.index',['companies'=>$companies, 'projects'=> $projects]);
+        }
+        return view('auth.login');
+
     }
 
     public function create()
@@ -43,7 +44,7 @@ class ProjectsController extends Controller
 
         ]);
 
-        if(Auth::check()) {
+        if(Auth::check()) { //Must be logged in
             $post = new Project;
             $post->name = request('name');
             $post->description = request('description');
@@ -54,10 +55,7 @@ class ProjectsController extends Controller
             $tempProjectID = Company::where('name', request('company_id'))->get();
             $projectID = $tempProjectID[0]->id;
             $post->company_id = $projectID;
-
-
-            //dd($post->company_id);
-            $company = $post->save();
+            $post->save();
 
             //$company = Company::create([$request->all()]);
             //$company = Company::create($request->all());
@@ -76,19 +74,19 @@ class ProjectsController extends Controller
         return back()->withInput()->with('errors','Error !!! Company could not be created!!');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Project  $project
-     * @return \Illuminate\Http\Response
-     */
-
     public function show($id)
     {
         $project = Project::find($id);
+        //$comments = Comment::where('commentable_id',);
 
+        $comments = Comment::where([
+            ['commentable_type', '=', 'Project'],
+            ['commentable_id', '=', $id],
+        ])->get();
+
+        //dd($comments->url);
         $comp = Company::find($project->company_id);
-        return view('projects.show',['project'=>$project,'comp'=>$comp]);
+        return view('projects.show',['project' => $project,'comp' => $comp, 'comments' => $comments]);
         //dd($comp);
     }
 
@@ -104,9 +102,6 @@ class ProjectsController extends Controller
     {
         $project = Project::find($id);
         $comp = Company::find($project->company_id);
-
-
-
 
         $companies = Company::all();
         return view('projects.edit',['project' => $project , 'comp' => $comp , 'companies' => $companies]);

@@ -25,11 +25,15 @@ Route::get('/home', 'HomeController@index')->name('home');
 //Route::post('/companies/store', 'CompaniesController@store')->name('store');
 
 
-Route::resource('companies','CompaniesController');
-Route::resource('projects','ProjectsController');
-Route::resource('roles','RolesController');
-Route::resource('task','TaskController');
-Route::resource('users','UserController');
+Route::middleware(['auth'])->group(function (){
+    Route::resource('companies','CompaniesController');
+    Route::resource('projects','ProjectsController');
+    Route::resource('roles','RolesController');
+    Route::resource('tasks','TasksController');
+    Route::resource('users','UsersController');
+    Route::resource('comments','CommentsController');
+});
+
 
 
 /*

@@ -7,6 +7,7 @@
         <div class="jumbotron">
             <h1>{{$comp->name}}</h1>
             <p class="lead">{{$comp->description}}</p>
+
             {{-- <p><a class="btn btn-lg btn-success" href="#" role="button">Get started today</a></p> --}}
         </div>
 

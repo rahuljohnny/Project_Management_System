@@ -7,15 +7,20 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
+        <!-- Font awesome -->
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
         <!-- CSRF Token -->
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
         <title>{{ config('app.name', 'Laravel') }}</title>
 
-        <!-- Styles -->
         <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     </head>
+
     <body>
+
     <div id="app">
         <nav class="navbar navbar-default navbar-static-top">
             <div class="container">
@@ -48,6 +53,10 @@
                             <li><a href="{{ route('login') }}">Login</a></li>
                             <li><a href="{{ route('register') }}">Register</a></li>
                         @else
+                            <li><a href="{{ route('companies.index') }}">My Companies</a></li>
+                            <li><a href="{{ route('projects.index') }}">My Projects</a></li>
+                            <li><a href="{{ route('tasks.index') }}">My Tasks</a></li>
+
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true">
                                     {{ Auth::user()->name }} <span class="caret"></span>
@@ -64,14 +73,43 @@
                                         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                             {{ csrf_field() }}
                                         </form>
+
+
                                     </li>
+
+                                    <li>
+                                        <a href="{{ route('companies.index')}}">
+                                            My Companies
+                                        </a>
+
+
+                                    </li>
+
+
+
                                 </ul>
                             </li>
-                        @endguest
+
+
+                            {{--Drop down##############################################################################--}}
+
+                            {{--Drop down##############################################################################--}}
+
+                            @endguest
+
+
+
+
                     </ul>
                 </div>
             </div>
         </nav>
+
+
+
+
+
+
 
         <div class="container">
 

@@ -4,7 +4,7 @@
         <div class="panel panel-primary">
 
             <div class="panel-heading">
-                Projects<a class="pull-right btn btn-primary btn-sm" href="/projects/create"> Create new Project</a>
+                Projects<a class="pull-right btn btn-primary btn-sm" href="/projects/create"> Create new Project <i class="fa fa-plus" aria-hidden="true"></i></a>
             </div>
 
             <div class="panel-body">
