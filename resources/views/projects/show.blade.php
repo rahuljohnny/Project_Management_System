@@ -1,4 +1,3 @@
-
 @extends('layouts.app')
 @section('content')
 
@@ -21,8 +20,10 @@
             <form method="POST" action="{{ route('comments.store') }}">
                 {{csrf_field()}}
 
-                <input type="hidden" name="commentable_type" value="Project">
+                <input type="hidden" name="commentable_type" value="App\Project">
                 <input type="hidden" name="commentable_id" value="{{$project->id}}">
+
+                {{--
 
                 <div class="form-group">
                     <label for="comment-content">Proof of work done</label>
@@ -33,8 +34,10 @@
                               rows="3" spellcheck="false"
                               class="form-control autosize-target text-left">
 
-                </textarea>
+                    </textarea>
                 </div>
+
+                --}}
 
                 <div class="form-group">
                     <label for="comment-content">Comment</label>
@@ -44,7 +47,16 @@
                               name="body"
                               rows="5" spellcheck="false"
                               class="form-control autosize-target text-left">
-                </textarea>
+                    </textarea>
+
+                    <textarea placeholder="Enter Url or screenshots"
+                              style="resize: horizontal"
+                              id="comment-content"
+                              name="url"
+                              rows="2"  spellcheck="false"
+                              class="form-control autosize-target text-left">
+
+                    </textarea>
                 </div>
 
 
@@ -59,16 +71,10 @@
 
             {{--Uploaded Comments--}}
 
+            @if($comments->first())
+                @include('partials.comments')
+            @endif
 
-            <div class="form-group">
-                <h3>Comments</h3>
-                    @foreach($comments as $comment)
-                        @php
-                            $user = App\User::where('id', $comment->user_id)->get();
-                        @endphp
-                    <p><strong>{{$user[0]->name}}</strong>: {{$comment->body}}</p>
-                    @endforeach
-            </div>
 
         </div>
 
@@ -97,55 +103,44 @@
 
 
 
-    <div class="col-sm-3 col-md-3 col-lg-3 pull-right">
-        {{--
-        <div class="sidebar-module sidebar-module-inset">
-            <h4>About</h4>
-            <p>Etiam porta <em>sem malesuada magna</em> mollis euismod. Cras mattis consectetur purus sit amet fermentum. Aenean lacinia bibendum nulla sed consectetur.</p>
-        </div>
-        --}}
+    <div class="col-sm-3 col-md-3 col-lg-3 pull-right" style="background: rgba(179,226,232,0.58)">
 
-        <div class="sidebar-module">
-            <h4>Action</h4>
-            <ol class="list-unstyled">
-                <li><a href="/projects/{{$project->id}}/edit">Edit Project</a></li>
-                <li><a href="/projects/create">Add New Project</a></li>
-                <li><a href="/companies">List of Companies</a></li>
-                <li><a href="/projects">List of Projects</a></li>
-                <li><a href="/companies/create">Add new Company</a></li>
+        @if ($project->user_id == Auth::user()->id)
+            <div class="sidebar-module">
+                <h4>Actions</h4><hr>
+                <ol class="list-unstyled">
+                    <li><a href="/projects/{{$project->id}}/edit">Edit Project</a></li>
+                    <li><a href="/projects/create">Add New Project</a></li>
+                    <li><a href="/companies">List of Companies</a></li>
+                    <li><a href="/projects">List of Projects</a></li>
+                    <li><a href="/companies/create">Add new Company</a></li>
 
 
-                <li>
-
-
-                    <a
-                            href="#"
-                            onclick="
-                    var result = confirm('Are you sure you wish to delete this Project?');
-                      if( result ){
-                              event.preventDefault();
-                              document.getElementById('delete-form').submit();
-
-                      }
+                    <li>
+                        <a
+                                href="#"
+                                onclick="
+                        var result = confirm('Are you sure you wish to delete this Project?');
+                          if( result ){
+                                  event.preventDefault();
+                                  document.getElementById('delete-form').submit();
+                          }
                     "
-                    >
+                        >
+                            Delete
+                        </a>
 
-                        Delete
+                        <form id="delete-form" action="{{ route('projects.destroy',[$project->id]) }}"
+                              method="POST" style="display: none;">
+                            <input type="hidden" name="_method" value="delete">
+                            {{ csrf_field() }}
+                        </form>
+                    </li>
+                </ol>
+            </div>
 
-                    </a>
+        @endif
 
-                    <form id="delete-form" action="{{ route('projects.destroy',[$project->id]) }}"
-                          method="POST" style="display: none;">
-                        <input type="hidden" name="_method" value="delete">
-                        {{ csrf_field() }}
-                    </form>
-
-                </li>
-
-
-
-            </ol>
-        </div>
 
         {{--
         <div class="sidebar-module">

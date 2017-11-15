@@ -32,6 +32,9 @@ Route::middleware(['auth'])->group(function (){
     Route::resource('tasks','TasksController');
     Route::resource('users','UsersController');
     Route::resource('comments','CommentsController');
+
+    Route::get('/companiesAll', 'CompaniesController@indexAll')->name('companies.indexAll');
+    Route::get('/projectsAll', 'ProjectsController@indexAll')->name('projects.indexAll');
 });
 
 

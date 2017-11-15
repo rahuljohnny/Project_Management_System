@@ -38,7 +38,8 @@
         </div>
         --}}
 
-        <div class="sidebar-module">
+        @if ($comp->user_id == Auth::user()->id)
+            <div class="sidebar-module">
             <h4>Action</h4>
             <ol class="list-unstyled">
                 <li><a href="/companies/{{$comp->id}}/edit">Edit</a></li>
@@ -78,6 +79,7 @@
 
             </ol>
         </div>
+        @endif
 
         {{--
         <div class="sidebar-module">

@@ -25,6 +25,19 @@ class CompaniesController extends Controller
 
     }
 
+
+
+    public function indexAll()
+    {
+        if(Auth::check()){
+            //$companies = Company::all();
+            $companies = Company::all();
+            return view('companies.indexAll',['companies'=>$companies]);
+        }
+        return view('auth.login');
+
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -102,8 +115,16 @@ class CompaniesController extends Controller
      */
     public function edit($id)
     {
+
+
         $comp = Company::find($id);
-        return view('companies.edit',['comp'=>$comp]);
+
+        if($comp->user_id == auth()->id()){
+            return view('companies.edit',['comp'=>$comp]);
+        }
+
+
+        return 'Go away you crap :< this org is not urs!!';
     }
 
     /**

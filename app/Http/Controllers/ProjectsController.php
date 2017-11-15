@@ -22,18 +22,25 @@ class ProjectsController extends Controller
 
     }
 
+    public function indexAll()
+    {
+        if(Auth::check()){
+            //$companies = Company::all();
+            $companies = Company::all();
+            $projects = Project::all();
+            return view('projects.indexAll',['companies'=>$companies, 'projects'=> $projects]);
+        }
+        return view('auth.login');
+
+    }
+
     public function create()
     {
         $companies = Company::all();
         return view('projects.create',compact('companies'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+
     public function store(Request $request)
     {
         $this->validate(request(),[ //It validates if title and body is set properly
@@ -80,11 +87,11 @@ class ProjectsController extends Controller
         //$comments = Comment::where('commentable_id',);
 
         $comments = Comment::where([
-            ['commentable_type', '=', 'Project'],
+            ['commentable_type', '=', 'App\Project'],
             ['commentable_id', '=', $id],
         ])->get();
 
-        //dd($comments->url);
+     
         $comp = Company::find($project->company_id);
         return view('projects.show',['project' => $project,'comp' => $comp, 'comments' => $comments]);
         //dd($comp);
@@ -103,8 +110,17 @@ class ProjectsController extends Controller
         $project = Project::find($id);
         $comp = Company::find($project->company_id);
 
+
+
         $companies = Company::all();
-        return view('projects.edit',['project' => $project , 'comp' => $comp , 'companies' => $companies]);
+
+        if(Auth::check()) {
+            if($project->user_id == auth()->id())
+            return view('projects.edit',['project' => $project , 'comp' => $comp , 'companies' => $companies]);
+        }
+
+        return "You cheater :> go away ";
+
     }
 
     /**
@@ -130,13 +146,6 @@ class ProjectsController extends Controller
 
         return back()->withInput();
     }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Project  $project
-     * @return \Illuminate\Http\Response
-     */
 
 
     public function destroy($id)

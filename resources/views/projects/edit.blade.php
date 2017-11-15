@@ -3,7 +3,7 @@
 
     <div class="col-md-8 col-lg-8 col-sm-8 pull-left">
         <!-- Example row of columns -->
-        <div class="row col-md-12 col-lg-12 col-sm-12" style="background: #182824;  margin: 10px; padding: 15px">
+        <div class="row col-md-12 col-lg-12 col-sm-12" style="background: rgba(179,226,232,0.58);  margin: 10px; padding: 15px">
 
             <form method="post" action="{{route('projects.update',[$project->id])}}">
                 {{csrf_field()}}
