@@ -50,52 +50,76 @@
                     <ul class="nav navbar-nav navbar-right">
                         <!-- Authentication Links -->
                         @guest
-                            <li><a href="{{ route('login') }}">Login</a></li>
-                            <li><a href="{{ route('register') }}">Register</a></li>
+                            <li><a href="{{ route('login') }}"><i class="fa fa-user-circle" aria-hidden="true"></i>Login</a></li>
+                            <li><a href="{{ route('register') }}"><i class="fa fa-user-plus" aria-hidden="true"></i>Register</a></li>
                         @else
-                            <li><a href="{{ route('companies.indexAll') }}">All Companies</a></li>
-                            <li><a href="{{ route('projects.indexAll') }}">All Projects</a></li>
-                            <li><a href="{{ route('tasks.index') }}">All Tasks</a></li>
+                            <li><a href="{{ route('companies.indexAll') }}"><i class="fa fa-users" aria-hidden="true"></i> Companies</a></li>
+                            <li><a href="{{ route('projects.indexAll') }}"><i class="fa fa-briefcase" aria-hidden="true"></i> Projects</a></li>
+                            <li><a href="{{ route('tasks.index') }}"><i class="fa fa-tasks" aria-hidden="true"></i> Tasks</a></li>
+
+
+
+            {{--Drop Down of admin ######################################################################################################--}}
+                            @if(Auth::user()->role_id == 1 )
+                                <li class="dropdown">
+
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true">
+                                    <i class="fa fa-user-circle" aria-hidden="true"></i>
+                                    Admin <span class="caret"></span>
+                                </a>
+
+                                    <ul class="dropdown-menu" role="menu">
+                                        <li><a href="{{ route('projects.index') }}"><i class="fa fa-briefcase" aria-hidden="true"></i> All Projects</a></li>
+                                        <li><a href="{{ route('users.index') }}"><i class="fa fa-user" aria-hidden="true"></i> All Users</a></li>
+                                        <li><a href="{{ route('tasks.index') }}"><i class="fa fa-tasks" aria-hidden="true"></i> All Tasks</a></li>
+                                        <li><a href="{{ route('companies.index') }}"><i class="fa fa-building" aria-hidden="true"></i> All Companies</a></li>
+                                        <li><a href="{{ route('roles.index') }}"><i class="fa fa-envelope" aria-hidden="true"></i> All Roles</a></li>
+
+                                    </ul>
+                                </li>
+                            @endif
+
+            {{--EOF Drop Down of admin ######################################################################################################--}}
 
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true">
-                                    {{ Auth::user()->name }} <span class="caret"></span>
-                                </a>
+                                        <i class="fa fa-user-circle-o" aria-hidden="true"></i>
+                                        {{ Auth::user()->name }} <span class="caret"></span>
+                                    </a>
 
-                                <ul class="dropdown-menu">
-                                    <li>
-                                        <a href="{{ route('logout') }}"
-                                            onclick="event.preventDefault();
+                                    <ul class="dropdown-menu">
+                                        <li>
+                                            <a href="{{ route('logout') }}"
+                                               onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                                            Logout
-                                        </a>
+                                                <i class="fa fa-eye" aria-hidden="true"></i> Logout
+                                            </a>
 
-                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                            {{ csrf_field() }}
-                                        </form>
-
-
-                                    </li>
-
-                                    <li>
-                                        <a href="{{ route('companies.index')}}">
-                                            My Companies
-                                        </a>
-                                    </li>
-
-                                    <li>
-                                        <a href="{{ route('projects.index')}}">
-                                            My Projects
-                                        </a>
-                                    </li>
+                                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                                {{ csrf_field() }}
+                                            </form>
 
 
+                                        </li>
 
-                                </ul>
-                            </li>
+                                        <li>
+                                            <a href="{{ route('companies.index')}}">
+                                                <i class="fa fa-eye" aria-hidden="true"></i> Companies I worked
+                                            </a>
+                                        </li>
+
+                                        <li>
+                                            <a href="{{ route('projects.index')}}">
+                                                <i class="fa fa-eye" aria-hidden="true"></i> My Projects
+                                            </a>
+                                        </li>
 
 
-                            {{--Drop down##############################################################################--}}
+
+                                    </ul>
+                                </li>
+
+                                {{--Drop down##############################################################################--}}
 
                             {{--Drop down##############################################################################--}}
 
@@ -137,4 +161,5 @@
         });
     </script>
 </body>
+
 </html>

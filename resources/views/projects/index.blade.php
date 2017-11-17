@@ -17,7 +17,7 @@
                         @endphp
 
                         <li class="list-group-item">
-                            <a href="projects/{{$project->id}}">
+                            <a href="projects/{{$project->id}}"><i class="fa fa-eye pull-right" aria-hidden="true" a href="projects/{{$project->id}}"></i>
                                 {{$project->name}}
                             </a>
                             by <a href="companies/{{$project->company_id}}">

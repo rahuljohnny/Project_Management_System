@@ -26,7 +26,7 @@
                                         <a href="users/{{$comment->user->id}} " > {{ $comment->user->first_name}} {{ $comment->user->last_name}}
                                             -  {{ $comment->user->email}} </a>
                                         <br>
-                                        commented on: <strong>{{ $comment->created_at}}</strong>
+                                        commented on: <strong>{{ $comment->created_at}}</strong><hr>
                                     </small>
                                 </h4>
                                 <p>

@@ -1,4 +1,3 @@
-
 @extends('layouts.app')
 @section('content')
 
@@ -31,26 +30,17 @@
 
 
     <div class="col-sm-3 col-md-3 col-lg-3 pull-right">
-        {{--
-        <div class="sidebar-module sidebar-module-inset">
-            <h4>About</h4>
-            <p>Etiam porta <em>sem malesuada magna</em> mollis euismod. Cras mattis consectetur purus sit amet fermentum. Aenean lacinia bibendum nulla sed consectetur.</p>
-        </div>
-        --}}
 
         @if ($comp->user_id == Auth::user()->id)
             <div class="sidebar-module">
-            <h4>Action</h4>
+            <h4>Action</h4><hr>
             <ol class="list-unstyled">
-                <li><a href="/companies/{{$comp->id}}/edit">Edit</a></li>
-                <li><a href="/projects/create">Add Project</a></li>
-                <li><a href="/companies">List of Companies</a></li>
-                <li><a href="/companies/create">Add new Company</a></li>
+                <li><a href="/companies/{{$comp->id}}/edit"><i class="fa fa-briefcase" aria-hidden="true"></i> Edit</a></li>
+                <li><a href="/companies"><i class="fa fa-users" aria-hidden="true"></i> Companies</a></li>
+                <li><a href="/companies/create"><i class="fa fa-plus" aria-hidden="true"></i> Add new Company</a></li>
 
-
+                <br>
                 <li>
-
-
                     <a
                     href="#"
                     onclick="
@@ -61,11 +51,7 @@
 
                       }
                     "
-                    >
-
-                    Delete
-
-                    </a>
+                    ><i class="fa fa-times" aria-hidden="true"></i> Delete</a>
 
                     <form id="delete-form" action="{{ route('companies.destroy',[$comp->id]) }}"
                           method="POST" style="display: none;">
@@ -81,15 +67,6 @@
         </div>
         @endif
 
-        {{--
-        <div class="sidebar-module">
-            <h4>Member Companies</h4>
-            <ol class="list-unstyled">
-                <li><a href="#">GitHub</a></li>
-            </ol>
-        </div>
-
-        --}}
     </div>
     <!-- Site footer -->
     <br><hr>

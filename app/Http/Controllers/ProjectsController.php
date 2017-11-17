@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Comment;
 use App\Company;
 use App\Project;
+use App\ProjectUser;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -86,10 +88,16 @@ class ProjectsController extends Controller
         $project = Project::find($id);
         //$comments = Comment::where('commentable_id',);
 
+        /*
         $comments = Comment::where([
             ['commentable_type', '=', 'App\Project'],
             ['commentable_id', '=', $id],
         ])->get();
+
+        */
+        //$comments = Comment::all();
+
+        $comments = $project->comments;
 
      
         $comp = Company::find($project->company_id);
@@ -110,10 +118,7 @@ class ProjectsController extends Controller
         $project = Project::find($id);
         $comp = Company::find($project->company_id);
 
-
-
         $companies = Company::all();
-
         if(Auth::check()) {
             if($project->user_id == auth()->id())
             return view('projects.edit',['project' => $project , 'comp' => $comp , 'companies' => $companies]);
@@ -169,6 +174,43 @@ class ProjectsController extends Controller
         return back()->withInput();
 
         */
+    }
+
+    public function addUser(Request $request)
+    {
+        //dd($request->all());
+
+        $project = Project::find($request->projectID);
+
+        if(Auth::user()->id == $project->user_id){
+            //$user = User::where('email','=',$request->email)->get(); //Used to get all the collections
+            $user = User::where('email','=',$request->email)->first(); //Used to get single record
+            if(!$user)
+                return redirect()->route('projects.show',['project'=> $request->projectID])
+                    ->with('success', $request->email. ' is not a valid user!!!');
+
+            $projectUser = ProjectUser::where([
+                ['project_id','=',$project->id],
+                ['user_id','=',$user->id]
+            ])->first();
+
+            if($projectUser){
+
+                //dd($projectUser);
+                return redirect()->route('projects.show',['project'=> $request->projectID])
+                    ->with('success', $request->email. ' is already a member of this project!!!');
+            }
+
+            if($user && $project){
+                $project->users()->attach($user->id); //project-user many to many
+
+                return redirect()->route('projects.show',['project'=> $request->projectID])
+                    ->with('success','User added successfully!!!');
+            }
+        }
+
+        return redirect()->route('projects.show',['project'=> $request->projectID])
+            ->with('error','Error!!! Could not added user!!!');
     }
 
 }

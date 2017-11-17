@@ -3,16 +3,24 @@
     <div class="col-md-6 col-lg-6 col-md-offset-3 col-lg-offset-3">
         <div class="panel panel-primary">
             <div class="panel-heading">
-                Companies Profile<a href="/companies/create" ><i class="fa fa-plus pull-right btn btn-primary btn-sm" aria-hidden="true"></i></a>
+                Users<a class="pull-right btn btn-primary btn-sm" href="/register"> Register</a>
             </div>
             <div class="panel-body">
 
                 <ul class="list-group">
-                    @foreach($companies as $company)
+                    @foreach($users as $user)
                         <li class="list-group-item">
-                            <a href="companies/{{$company->id}}">
-                                {{$company->name}}<i class="fa fa-eye pull-right" aria-hidden="true"></i>
+
+                            <a href="users/{{$user->id}}">
+                                {{$user->name}}
                             </a>
+
+                            <div class="pull-right">
+                                <a href="users/{{$user->id}}">
+                                    {{$user->email}}
+                                </a>
+                            </div>
+
                         </li>
                     @endforeach
                 </ul>

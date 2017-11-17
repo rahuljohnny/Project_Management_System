@@ -19,6 +19,8 @@
                         <li class="list-group-item">
                             <a href="projects/{{$project->id}}">
                                 {{$project->name}}
+                                <i class="fa fa-eye pull-right" aria-hidden="true" a href="projects/{{$project->id}}"></i>
+
                             </a>
                             by <a href="companies/{{$project->company_id}}">
                                 {{$companyN->name}}

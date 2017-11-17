@@ -14,7 +14,7 @@ class Project extends Model
         'days'
     ];
 
-    public function user(){
+    public function users(){
         return $this->belongsToMany(User::class);
     }
 
@@ -23,6 +23,6 @@ class Project extends Model
     }
 
     public function comments(){
-        return $this->morphMany(Comment::class,'commentable');
+        return $this->morphMany(Comment::class ,'commentable'); //,'commentable'
     }
 }

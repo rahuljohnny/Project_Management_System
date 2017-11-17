@@ -15,9 +15,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CompaniesController;
 use Illuminate\Support\Facades\Auth;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+
+Route::get('/', 'FrontController@index')->name('front');
+
 
 Auth::routes();
 
@@ -35,6 +35,10 @@ Route::middleware(['auth'])->group(function (){
 
     Route::get('/companiesAll', 'CompaniesController@indexAll')->name('companies.indexAll');
     Route::get('/projectsAll', 'ProjectsController@indexAll')->name('projects.indexAll');
+
+
+    Route::post('/projects/addUser/{projectID?}', 'ProjectsController@addUser')->name('projects.addUser');
+
 });
 
 
