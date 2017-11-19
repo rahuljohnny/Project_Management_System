@@ -17,9 +17,8 @@
             <textarea class="form-control" id="description" rows="3" name="description"></textarea>
         </div>
 
+
         {{--
-
-
         <div class="form-group">
             <label for="user_id">Select User ID</label>
             <select class="form-control" id="user_id" name="user_id">
@@ -28,8 +27,8 @@
                 @endforeach
             </select>
         </div>
-
         --}}
+
 
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>

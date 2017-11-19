@@ -1,31 +1,52 @@
 @extends('layouts.app')
 @section('content')
-    <div class="col-md-6 col-lg-6 col-md-offset-3 col-lg-offset-3">
-        <div class="panel panel-primary">
-            <div class="panel-heading">
-                Users<a class="pull-right btn btn-primary btn-sm" href="/register"> Register</a>
-            </div>
-            <div class="panel-body">
-
-                <ul class="list-group">
-                    @foreach($users as $user)
-                        <li class="list-group-item">
-
-                            <a href="users/{{$user->id}}">
-                                {{$user->name}}
-                            </a>
-
-                            <div class="pull-right">
-                                <a href="users/{{$user->id}}">
-                                    {{$user->email}}
-                                </a>
-                            </div>
-
-                        </li>
-                    @endforeach
-                </ul>
-
+    @foreach($users as $shirt)
+    <div class="row">
+        <div class="col-xs-12 col-sm-5">
+            <img class="img-responsive" src="{{url('images',$shirt->image)}}" width="20%">
+        </div>
+        <div class="col-xs-12 col-sm-7">
+            <div class="row">
+                <div class="col-sm-6">
+                    <h4><a href="/users/{{$shirt->id}}">{!!$shirt->name!!}</a></h4>
+                </div>
+                <div class="col-sm-6">
+                    <h5 class="pull-right">
+                        {{$shirt->created_at}}
+                    </h5>
+                </div>
             </div>
         </div>
+        <div class="col-xs-12">
+            <hr />
+        </div>
     </div>
+
+    @endforeach
+
+
+
+    {{--
+    <div class="row">
+        @forelse($users as $shirt)
+            <h3>{{$shirt->name}}</h3>
+            <div class="small-3 medium-3 large-3 columns">
+                <div class="item-wrapper">
+                    <div class="img-wrapper">
+                        <img src="{{url('images',$shirt->image)}}" class="pull-left"/>
+                    </div>
+                    <a href="shirts/{{$shirt->id}}">
+
+                    </a>
+
+                </div>
+            </div>
+
+        @empty
+            <h3>No shirts</h3>
+        @endforelse
+
+    </div>
+
+    --}}
 @endsection

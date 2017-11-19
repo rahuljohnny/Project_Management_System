@@ -9,17 +9,6 @@ use Illuminate\Foundation\Auth\RegistersUsers;
 
 class RegisterController extends Controller
 {
-    /*
-    |--------------------------------------------------------------------------
-    | Register Controller
-    |--------------------------------------------------------------------------
-    |
-    | This controller handles the registration of new users as well as their
-    | validation and creation. By default this controller uses a trait to
-    | provide this functionality without requiring any additional code.
-    |
-    */
-
     use RegistersUsers;
 
     /**
@@ -60,12 +49,68 @@ class RegisterController extends Controller
      * @param  array  $data
      * @return \App\User
      */
+
     protected function create(array $data)
     {
+
+        /*/&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+        if($data['image']) {
+            $exploded = explode(',', $data['image']);
+            $decoded = base64_decode($exploded[1]);
+            if (str_contains($exploded[0], 'jpeg'))
+                $extension = 'jpg';
+            else
+                $extension = 'png';
+
+            $fileName = str_random() . '.' . $extension;
+            $path = public_path() . '/' . $fileName;
+            file_put_contents($path, $decoded);
+        }
+
+        *///TODO jjjjjjjjjjjjjjjjjjjjjjjjjjjjj
+
+
+
+        $request = (object) $data; //converted array to object
+        if($data['image'])
+        {
+            $fileName = $data['image']->getClientOriginalName();
+            $fileName = str_random() . '_' .$fileName;
+            //$data['image']->storeAs('images',$fileName);
+
+            $data['image']->move('images', $fileName);
+            //$data['image'] = $fileName;
+        }
+        else{
+            return 'No file selected!';
+        }
+
+
+        session()->flash( //The js is not working as I...
+            'message','Product is published!!'
+        );
+
+
         return User::create([
+
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
+            'image' => $fileName,
+
+            'first_name' => $data['first_name'],
+            'middle_name' => $data['middle_name'],
+            'last_name' => $data['last_name'],
+            'city' => $data['email'],
+            'role_id' => $data['role_id'],
+            'image' => $fileName
+
         ]);
+
+
+
+
+
+        return redirect('/');
     }
 }

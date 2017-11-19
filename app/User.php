@@ -22,8 +22,8 @@ class User extends Authenticatable
         'middle_name',
         'last_name',
         'city',
-        'role_id'
-
+        'role_id',
+        'image'
     ];
 
     /**
@@ -35,23 +35,29 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
-    public function tasks(){
+    public function tasks()
+    {
         return $this->hasMany(Task::class);
     }
 
-    public function roles(){
+    public function roles()
+    {
         return $this->belongsTo(Role::class);
     }
 
-    public function companies(){
+    public function companies()
+    {
         return $this->hasMany(Company::class);
     }
 
-    public function projects(){
+    public function projects()
+    {
         return $this->belongsToMany(Project::class);
     }
 
-    public function comments(){
-        return $this->morphMany(Comment::class,'commentable');
+    public function comments()
+    {
+        return $this->morphMany(Comment::class, 'commentable');
     }
+
 }

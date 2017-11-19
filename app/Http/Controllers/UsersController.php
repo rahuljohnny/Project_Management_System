@@ -14,7 +14,8 @@ class UsersController extends Controller
      */
     public function index()
     {
-        //
+        $users = User::all();
+        return view('users.index',compact('users'));
     }
 
     /**
@@ -35,7 +36,7 @@ class UsersController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        dd($request->all());
     }
 
     /**
@@ -46,7 +47,8 @@ class UsersController extends Controller
      */
     public function show(User $user)
     {
-        //
+        $user = User::find($user->id);
+        return view('users.show',compact('user'));
     }
 
     /**
